@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Surprise 💖</title>
+
+<!-- Confetti -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #ffe6f0, #ffd6ec);
+    overflow: hidden;
+}
+
+/* BOOK STYLE */
+.book {
+    width: 100%;
+    height: 100vh;
+    perspective: 1500px;
+    position: relative;
+}
+
+.page {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: white;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    backface-visibility: hidden;
+    transition: transform 1s;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Heart animation */
+.hearts::before {
+    content: "💖 💕 💗 💓 💞";
+    position: absolute;
+    font-size: 30px;
+    animation: float 6s linear infinite;
+    opacity: 0.4;
+}
+
+@keyframes float {
+    0% {transform: translateY(100vh);}
+    100% {transform: translateY(-100vh);}
+}
+
+/* Buttons */
+button {
+    padding: 12px 25px;
+    margin: 10px;
+    border-radius: 25px;
+    border: none;
+    background: hotpink;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+/* Slideshow */
+.slide-container {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.slide-container img {
+    width: 250px;
+    border-radius: 20px;
+}
+
+.text {
+    width: 300px;
+    font-size: 18px;
+}
+
+/* Typing */
+.typing {
+    border-right: 3px solid pink;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Input */
+input {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+<source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+</audio>
+
+<div class="book">
+
+<!-- PAGE 1 -->
+<div class="page" id="page1">
+    <div class="hearts"></div>
+    <h2 class="typing" id="typingText"></h2>
+    <p>Are you ready for the surprise??</p>
+
+    <button id="yesBtn" onclick="nextPage()">YES</button>
+    <button id="noBtn">NO</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page hidden" id="page2">
+    <h2>Our Memories 💕</h2>
+
+    <div class="slide-container">
+        <img id="img">
+        <div class="text" id="text"></div>
+    </div>
+
+    <button onclick="prevPage()">Prev</button>
+    <button onclick="nextPage()">Next</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page hidden" id="page3">
+    <h2>Enter my birthday 🎂</h2>
+    <input id="bday" placeholder="DDMM">
+    <button onclick="check()">Submit</button>
+    <p id="msg"></p>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page hidden" id="page4">
+    <h2>Thank You 💖</h2>
+    <p class="typing" id="finalText"></p>
+</div>
+
+</div>
+
+<script>
+let page = 1;
+
+/* Page Flip */
+function nextPage() {
+    document.getElementById("page" + page).classList.add("hidden");
+    page++;
+    document.getElementById("page" + page).classList.remove("hidden");
+    confetti({ particleCount: 150 });
+}
+
+function prevPage() {
+    document.getElementById("page" + page).classList.add("hidden");
+    page--;
+    document.getElementById("page" + page).classList.remove("hidden");
+}
+
+/* Typing Effect */
+function typeText(element, text, speed = 50) {
+    let i = 0;
+    function typing() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        }
+    }
+    element.innerHTML = "";
+    typing();
+}
+
+typeText(document.getElementById("typingText"),
+"I have a surprise for you 💖");
+
+/* NO Button prank */
+let no = document.getElementById("noBtn");
+let yes = document.getElementById("yesBtn");
+
+no.addEventListener("mouseover", () => {
+    yes.style.transform = "scale(1.5)";
+    no.style.position = "absolute";
+    no.style.left = Math.random() * 80 + "%";
+    no.style.top = Math.random() * 80 + "%";
+});
+
+/* Slideshow */
+let slides = [
+{
+img: "https://via.placeholder.com/250",
+text: "You’re literally my favorite human 😭💗 like how did I get so lucky to have a bestie who’s this crazy, annoying, and still somehow the sweetest person ever 🫶😂 We laugh at the dumbest things, fight over nothing, and still can’t go a day without talking 😌💅 You’re my therapist, my partner in crime, and the only one who understands my nonsense without judging 🤡✨ Honestly, life would be so boring without you… so yeah, you’re stuck with me forever 😏💖"
+},
+{
+img: "https://via.placeholder.com/250",
+text: "You’re my favorite chaos partner ever 😂💗 like we literally laugh over nothing and still somehow understand each other perfectly 🫶✨ but also excuse me??? you NEVER watch the shows I suggest 😤📺 and you still haven’t watched F4 yet like what are you even doing with your life 😭💀 I deserve better as a bestie fr 😌💅 but okay fine I’ll forgive you because you’re still my person and I can’t stay mad at you for more than 2 minutes 🤡💖 just know I’m still judging you until you finally watch it 😏🍿"
+},
+{
+img: "https://via.placeholder.com/250",
+text: "You’re honestly the only person I can be 100% weird with and not feel judged 😭😂 like we say the dumbest things, laugh at nothing, and still act like it’s the funniest thing ever 🤡💅 You’ve seen me at my worst, my ugliest moods, and my most random moments… and you still stayed 🫶✨ that’s real friendship right there 💖 No matter where life takes us, I know we’ll still be sending each other nonsense at 2am and laughing like idiots 😭💗"
+}
+
+];
+
+let i = 0;
+
+function showSlides() {
+    document.getElementById("img").src = slides[i].img;
+    document.getElementById("text").innerText = slides[i].text;
+    i = (i + 1) % slides.length;
+}
+
+setInterval(showSlides, 2500);
+
+/* Birthday check */
+function check() {
+    let val = document.getElementById("bday").value;
+    let msg = document.getElementById("msg");
+
+    if (val === "1703") {
+        msg.innerText = "Oh wow! I never expected that you remembered 💖";
+        confetti();
+        setTimeout(() => {
+            nextPage();
+            typeText(document.getElementById("finalText"),
+            "Thank you for being there for me always 💖 You mean a lot to me 🫶");
+        }, 1500);
+    } else {
+        msg.innerText = "Siggu ledha!Na birthday kuda gurthu ledhu malli best frndddd";
+    }
+}
+</script>
+
+</body>
+</html>
